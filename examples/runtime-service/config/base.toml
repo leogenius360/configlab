@@ -1,0 +1,20 @@
+service_name = "orders-api"
+
+[server]
+address = "0.0.0.0"
+port = 8080
+
+[logging]
+level = "info"
+format = "json"
+
+[traffic]
+requests_per_second = 100
+max_in_flight = 32
+
+[features]
+checkout_v2 = false
+
+[upstream]
+endpoint = "https://payments.internal.example"
+credential_ref = "vault://payments/service-account"

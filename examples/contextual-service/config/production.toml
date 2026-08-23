@@ -1,0 +1,6 @@
+[server]
+request_timeout = 20
+
+[logging]
+level = "info"
+format = "json"

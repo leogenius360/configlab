@@ -1,0 +1,78 @@
+[package]
+name = "configlab"
+version = "0.1.0-alpha.1"
+authors.workspace = true
+edition = "2024"
+rust-version = "1.97"
+license = "BSD-3-Clause"
+description = "Derive-first configuration toolkit for Rust with deterministic resolution, validation, provenance, and secret-safe diagnostics"
+documentation = "https://docs.rs/configlab"
+repository = "https://github.com/leogenius360/configlab"
+readme = "README.md"
+keywords = ["configuration", "config", "serde", "environment", "cli"]
+categories = ["config"]
+include = [
+    "src/**",
+    "tests/**",
+    "/Cargo.toml",
+    "/README.md",
+    "/CHANGELOG.md",
+    "/LICENSE",
+    "docs/**",
+]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[lints]
+workspace = true
+
+[workspace]
+members = [
+    ".",
+    "macros",
+    "examples/basic-app",
+    "examples/cli-tool",
+    "examples/contextual-service",
+    "examples/runtime-service",
+    "examples/platform-integration",
+]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0-alpha.1"
+authors = ["Dominic Maabobra Tuolong"]
+edition = "2024"
+rust-version = "1.97"
+license = "BSD-3-Clause"
+repository = "https://github.com/leogenius360/configlab"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.dependencies]
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = { version = "1.0.151", features = ["arbitrary_precision"] }
+toml = "1.1.4"
+serde_yaml_ng = "0.10.0"
+proc-macro2 = "1.0.107"
+proc-macro-crate = "3.4.0"
+quote = "1.0.47"
+syn = { version = "3.0.3", features = ["full", "parsing"] }
+
+[features]
+default = ["derive", "toml", "json", "yaml"]
+derive = ["dep:configlab-macros"]
+toml = ["dep:toml"]
+json = []
+yaml = ["dep:serde_yaml_ng"]
+
+[dependencies]
+configlab-macros = { version = "=0.1.0-alpha.1", path = "macros", optional = true }
+serde.workspace = true
+serde_json.workspace = true
+toml = { workspace = true, optional = true }
+serde_yaml_ng = { workspace = true, optional = true }
+
+[dev-dependencies]
+proptest = { version = "1.11.0", default-features = false, features = ["std"] }

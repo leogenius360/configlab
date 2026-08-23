@@ -1,0 +1,21 @@
+[server]
+address = "0.0.0.0"
+port = 8080
+request_timeout = 30
+
+[database]
+endpoint = "db.internal.example"
+name = "telemetry"
+username = "telemetry_service"
+password = "secret://production/telemetry/database-password"
+pool_minimum = 2
+pool_maximum = 20
+connect_timeout = 5
+
+[logging]
+level = "warning"
+format = "text"
+
+[metrics]
+enabled = true
+path = "/metrics"

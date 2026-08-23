@@ -1,0 +1,7 @@
+profile = "release"
+input_dir = "assets"
+output_dir = "dist"
+jobs = 6
+minify = true
+fail_on_warning = false
+include_paths = ["shared-assets", "vendor-assets"]

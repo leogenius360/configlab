@@ -1,0 +1,30 @@
+name: Feature request
+description: Propose a focused addition to ConfigLab's configuration model.
+title: "feature: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the configuration problem and why existing APIs do not solve it.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed capability
+      description: Explain the desired semantics and a concise usage example.
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Boundary considerations
+      description: Note effects on determinism, provenance, validation, redaction, or source neutrality.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

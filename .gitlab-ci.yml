@@ -1,0 +1,71 @@
+image: rust:1.97.1-bullseye
+
+stages:
+  - verify
+  - security
+
+variables:
+  CARGO_HOME: "$CI_PROJECT_DIR/.cargo"
+  CARGO_TERM_COLOR: always
+
+cache:
+  key:
+    files:
+      - Cargo.lock
+  paths:
+    - .cargo/registry/index/
+    - .cargo/registry/cache/
+    - .cargo/git/db/
+
+quality:
+  stage: verify
+  interruptible: true
+  before_script:
+    - rustup component add clippy rustfmt
+  script:
+    - rustc --version
+    - cargo --version
+    - ./script/check.sh
+
+stable-toolchain:
+  stage: verify
+  image: rust:latest
+  interruptible: true
+  before_script:
+    - rustup component add clippy rustfmt
+  script:
+    - cargo fmt --all --check
+    - cargo test --locked --workspace --all-features --all-targets
+    - cargo clippy --locked --workspace --all-features --all-targets -- -D warnings
+    - RUSTDOCFLAGS="-D warnings" cargo doc --locked --workspace --all-features --no-deps
+
+# These shell-runner jobs are required release gates. Projects adopting this
+# repository must attach runners carrying the corresponding protected tags.
+windows:
+  stage: verify
+  tags: [windows]
+  interruptible: true
+  script:
+    - bash ./script/check.sh
+
+macos:
+  stage: verify
+  tags: [macos]
+  interruptible: true
+  script:
+    - bash ./script/check.sh
+
+advisory-audit:
+  stage: security
+  image: rust:1.97.1-bullseye
+  interruptible: true
+  before_script:
+    - export PATH="$CI_PROJECT_DIR/.cargo-tools/bin:$PATH"
+    - cargo install cargo-audit --version 0.22.2 --locked --root .cargo-tools
+  script:
+    - cargo audit --deny warnings
+    - cargo metadata --locked --format-version 1 > dependency-metadata.json
+  artifacts:
+    when: always
+    paths:
+      - dependency-metadata.json

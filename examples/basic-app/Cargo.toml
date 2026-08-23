@@ -1,0 +1,15 @@
+[package]
+name = "example-basic-app"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[dependencies]
+configlab = { path = "../.." }
+serde.workspace = true

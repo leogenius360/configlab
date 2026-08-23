@@ -1,0 +1,14 @@
+{
+  "logging": {
+    "level": "debug"
+  },
+  "traffic": {
+    "requests_per_second": 250
+  },
+  "features": {
+    "checkout_v2": true
+  },
+  "upstream": {
+    "credential_ref": "vault://payments/rotated-service-account"
+  }
+}

@@ -1,0 +1,5 @@
+[server]
+request_timeout = 25
+
+[database]
+pool_maximum = 30
